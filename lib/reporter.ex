@@ -10,7 +10,7 @@ defmodule TorrentDownloader.Reporter do
     |> Report.add_line(formatter.info_line("seeds: #{torrent.seeds}"))
     |> Report.add_line(formatter.info_line("leechs: #{torrent.leechs}"))
     |> Report.add_line(formatter.info_line("size: #{torrent.size}"))
-    |> Report.add_line(formatter.info_line("url: #{torrent.link}"))
+    |> Report.add_lines(formatter.info_multiline("url: #{torrent.link}"))
     |> Report.add_line(formatter.last_line)
     |> Report.render
   end

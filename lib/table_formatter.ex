@@ -3,7 +3,7 @@ defmodule TorrentDownloader.TableFormatter do
   alias TorrentDownloader.Utils.ListSpliter
 
   defp line_size do
-    52
+    75
   end
 
   def first_line do
@@ -26,14 +26,6 @@ defmodule TorrentDownloader.TableFormatter do
     to_char_list(string)
     |> ListSpliter.split(line_size)
     |> Enum.map(&( info_line(to_string(&1) )))
-  end
-
-  defp split_by(collection, n) do
-    split_by([], collection, n)
-  end
-
-  defp split_by(accumulator, collection, n) do
-    split_by(List.insert_at(accumulator, 0, collection.take(n)), collection, n)
   end
 
   defp name_with_space_to(string, final_size) do
