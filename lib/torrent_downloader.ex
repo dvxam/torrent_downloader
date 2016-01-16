@@ -15,10 +15,18 @@ end
 
 defmodule TorrentDownloader do
   alias TorrentDownloader.CategorieParser
+  alias TorrentDownloader.Reporter
+  alias TorrentDownloader.TableFormatter
 
   def movies do
     HTTPotion.get("http://www.cpasbien.io/view_cat.php?categorie=films").body
       |> CategorieParser.parse
+  end
+
+  def display_movies do
+    TorrentDownloader.movies
+    |> Enum.map(fn torrent -> Reporter.report_torrent(torrent, TableFormatter) end)
+    |> Enum.each(fn report -> IO.puts(report) end)
   end
 
   def series do

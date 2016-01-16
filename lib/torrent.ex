@@ -1,8 +1,8 @@
 defmodule TorrentDownloader.Torrent do
   defstruct name: 'No name',
-            link: nil,
-            description: nil,
-            size: nil,
+            link: "",
+            description: "",
+            size: "",
             seeds: 0,
             leechs: 0
 end
