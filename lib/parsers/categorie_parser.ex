@@ -1,6 +1,6 @@
 defmodule TorrentDownloader.Parsers.CategorieParser do
   import Floki
-  alias TorrentDownloader.Models.Torrent
+  alias TorrentDownloader.Models.TorrentLink
 
   def parse(html) do
     html
@@ -9,7 +9,7 @@ defmodule TorrentDownloader.Parsers.CategorieParser do
   end
 
   defp parse_torrent(torrent_html) do
-    %Torrent{
+    %TorrentLink{
       name: torrent_html |> find(".titre") |> text,
       size: torrent_html |> find(".poid") |> text,
       seeds: torrent_html |> find(".seed_ok") |> text,

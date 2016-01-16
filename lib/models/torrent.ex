@@ -4,6 +4,5 @@ defmodule TorrentDownloader.Models.Torrent do
             description: "",
             size: "",
             seeds: 0,
-            leechs: 0,
-            page_url: ""
+            leechs: 0
 end

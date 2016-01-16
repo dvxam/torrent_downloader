@@ -3,21 +3,26 @@ defmodule TorrentDownloader.Parsers.TorrentPageParser do
   alias TorrentDownloader.Models.Torrent
 
   def parse(html, torrent) do
-    description = get_torrent_description(html)
-    url = get_torrent_url(html)
-    %{torrent | description: description, link: url}
+    %Torrent{
+      description: torrent_description(html),
+      link: torrent_url(html),
+      name: torrent.name,
+      size: torrent.size,
+      seeds: torrent.seeds,
+      leechs: torrent.leechs
+    }
   end
 
-  defp get_torrent_description(html) do
+  defp torrent_description(html) do
     html
     |> find("#textefiche p")
     |> List.last
     |> text
   end
 
-  defp get_torrent_url(html) do
+  defp torrent_url(html) do
     html
-    |> find("#infosficher a")
+    |> find("#infosficher a#telecharger")
     |> attribute("href")
     |> List.first
   end
