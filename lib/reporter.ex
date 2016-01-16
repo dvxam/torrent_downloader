@@ -1,3 +1,15 @@
+defmodule TorrentDownloader.Report do
+  defstruct content: ""
+
+  def add_line(%TorrentDownloader.Report{content: content}, line) do
+    %TorrentDownloader.Report{content: content <> line <> "\n"}
+  end
+
+  def render(%TorrentDownloader.Report{content: content}) do
+    content
+  end
+end
+
 defmodule TorrentDownloader.Reporter do
   def report_torrent(%TorrentDownloader.Torrent{
     name: name,
@@ -6,15 +18,17 @@ defmodule TorrentDownloader.Reporter do
     size: size,
     seeds: seeds,
     leechs: leechs}) do
-    first_line <> "\n"
-    <> info_line(name) <> "\n"
-    <> info_line(description) <> "\n"
-    <> horizontal_separator <> "\n"
-    <> info_line("seeds: #{seeds}") <> "\n"
-    <> info_line("leechs: #{leechs}") <> "\n"
-    <> info_line("size: #{size}") <> "\n"
-    <> info_line("url: #{link}") <> "\n"
-    <> last_line <> "\n"
+    %TorrentDownloader.Report{}
+    |> TorrentDownloader.Report.add_line(first_line)
+    |> TorrentDownloader.Report.add_line(info_line(name))
+    |> TorrentDownloader.Report.add_line(info_line(description))
+    |> TorrentDownloader.Report.add_line(horizontal_separator)
+    |> TorrentDownloader.Report.add_line(info_line("seeds: #{seeds}"))
+    |> TorrentDownloader.Report.add_line(info_line("leechs: #{leechs}"))
+    |> TorrentDownloader.Report.add_line(info_line("size: #{size}"))
+    |> TorrentDownloader.Report.add_line(info_line("url: #{link}"))
+    |> TorrentDownloader.Report.add_line(last_line)
+    |> TorrentDownloader.Report.render
   end
 
   defp first_line do
