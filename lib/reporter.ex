@@ -1,18 +1,5 @@
-defmodule TorrentDownloader.Report do
-  defstruct content: ""
-  alias TorrentDownloader.Report
-
-  def add_line(%Report{content: content}, line) do
-    %Report{content: content <> line <> "\n"}
-  end
-
-  def render(%Report{content: content}) do
-    content
-  end
-end
-
 defmodule TorrentDownloader.Reporter do
-  alias TorrentDownloader.Report
+  alias TorrentDownloader.Models.Report
 
   def report_torrent(torrent, formatter) do
     %Report{}

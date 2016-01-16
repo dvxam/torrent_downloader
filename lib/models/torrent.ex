@@ -1,4 +1,4 @@
-defmodule TorrentDownloader.Torrent do
+defmodule TorrentDownloader.Models.Torrent do
   defstruct name: 'No name',
             link: "",
             description: "",

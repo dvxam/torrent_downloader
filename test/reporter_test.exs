@@ -1,8 +1,9 @@
 defmodule TorrentDownloader.ReporterTest do
   use ExUnit.Case
+  alias TorrentDownloader.Models.Torrent
 
   test "#report_torrent displays a torrent" do
-    torrent = %TorrentDownloader.Torrent{
+    torrent = %Torrent{
       name: "Star Wars VI",
       link: "torrent://host/path",
       description: "The best disney ever.",
