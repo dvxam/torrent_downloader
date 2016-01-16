@@ -5,7 +5,7 @@ defmodule TorrentDownloader.Reporter do
     %Report{}
     |> Report.add_line(formatter.first_line)
     |> Report.add_line(formatter.info_line(torrent.name))
-    |> Report.add_line(formatter.info_line(torrent.description))
+    |> Report.add_lines(formatter.info_multiline(torrent.description))
     |> Report.add_line(formatter.horizontal_separator)
     |> Report.add_line(formatter.info_line("seeds: #{torrent.seeds}"))
     |> Report.add_line(formatter.info_line("leechs: #{torrent.leechs}"))

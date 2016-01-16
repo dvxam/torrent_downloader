@@ -6,6 +6,11 @@ defmodule TorrentDownloader.Models.Report do
     %Report{content: content <> line <> "\n"}
   end
 
+  def add_lines(report, lines) do
+    bulk = Enum.join(lines, "\n")
+    add_line(report, bulk)
+  end
+
   def render(%Report{content: content}) do
     content
   end

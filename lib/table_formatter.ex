@@ -1,18 +1,30 @@
 defmodule TorrentDownloader.TableFormatter do
-  def first_line do
-    "┌──────────────────────────────────────────────────────┐"
+  alias TorrentDownloader.CharGenerator
+
+  defp line_size do
+    80
   end
 
-  def info_line(string) do
-    "│ " <> name_with_space_to(string, 52) <> " │"
+  def first_line do
+    "┌" <> CharGenerator.generate("─", line_size + 2) <> "┐"
   end
 
   def horizontal_separator do
-    "├──────────────────────────────────────────────────────┤"
+    "├" <> CharGenerator.generate("─", line_size + 2) <> "┤"
   end
 
   def last_line do
-    "└──────────────────────────────────────────────────────┘"
+    "└" <> CharGenerator.generate("─", line_size + 2) <> "┘"
+  end
+
+  def info_line(string) do
+    "│ " <> name_with_space_to(string, line_size) <> " │"
+  end
+
+  def info_multiline(string) do
+    to_char_list(string)
+    |> Enum.chunk(line_size)
+    |> Enum.map(&(info_line(to_string(&1))))
   end
 
   defp name_with_space_to(string, final_size) do
@@ -24,12 +36,12 @@ defmodule TorrentDownloader.TableFormatter do
   end
 
   defp complete_with_spaces(string, spaces) when spaces >= 0 do
-    "#{string}" <> TorrentDownloader.CharGenerator.generate(" ", spaces
+    "#{string}" <> CharGenerator.generate(" ", spaces
       )
   end
 
   defp cut_string_with_dots(string, final_size) do
     String.slice(string, 0, final_size - 3)
-      <> TorrentDownloader.CharGenerator.generate(".", 3)
+      <> CharGenerator.generate(".", 3)
   end
 end
