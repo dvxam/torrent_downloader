@@ -3,7 +3,7 @@ defmodule TorrentDownloader.TableFormatter do
   alias TorrentDownloader.Utils.ListSpliter
 
   defp line_size do
-    75
+    52
   end
 
   def first_line do

@@ -1,15 +1,16 @@
 defmodule TorrentDownloader.Parsers.TorrentPageParser do
   import Floki
   alias TorrentDownloader.Models.Torrent
+  alias TorrentDownloader.Models.TorrentLink
 
-  def parse(html, torrent) do
+  def parse(html, torrent_link) do
     %Torrent{
       description: torrent_description(html),
-      link: torrent_url(html),
-      name: torrent.name,
-      size: torrent.size,
-      seeds: torrent.seeds,
-      leechs: torrent.leechs
+      link: TorrentLink.baseurl(torrent_link) <> torrent_path(html),
+      name: torrent_link.name,
+      size: torrent_link.size,
+      seeds: torrent_link.seeds,
+      leechs: torrent_link.leechs
     }
   end
 
@@ -20,7 +21,7 @@ defmodule TorrentDownloader.Parsers.TorrentPageParser do
     |> text
   end
 
-  defp torrent_url(html) do
+  defp torrent_path(html) do
     html
     |> find("#infosficher a#telecharger")
     |> attribute("href")
