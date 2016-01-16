@@ -11,44 +11,17 @@ defmodule TorrentDownloader.Report do
 end
 
 defmodule TorrentDownloader.Reporter do
-  def report_torrent(%TorrentDownloader.Torrent{
-    name: name,
-    link: link,
-    description: description,
-    size: size,
-    seeds: seeds,
-    leechs: leechs}) do
+  def report_torrent(torrent, formatter) do
     %TorrentDownloader.Report{}
-    |> TorrentDownloader.Report.add_line(first_line)
-    |> TorrentDownloader.Report.add_line(info_line(name))
-    |> TorrentDownloader.Report.add_line(info_line(description))
-    |> TorrentDownloader.Report.add_line(horizontal_separator)
-    |> TorrentDownloader.Report.add_line(info_line("seeds: #{seeds}"))
-    |> TorrentDownloader.Report.add_line(info_line("leechs: #{leechs}"))
-    |> TorrentDownloader.Report.add_line(info_line("size: #{size}"))
-    |> TorrentDownloader.Report.add_line(info_line("url: #{link}"))
-    |> TorrentDownloader.Report.add_line(last_line)
+    |> TorrentDownloader.Report.add_line(formatter.first_line)
+    |> TorrentDownloader.Report.add_line(formatter.info_line(torrent.name))
+    |> TorrentDownloader.Report.add_line(formatter.info_line(torrent.description))
+    |> TorrentDownloader.Report.add_line(formatter.horizontal_separator)
+    |> TorrentDownloader.Report.add_line(formatter.info_line("seeds: #{torrent.seeds}"))
+    |> TorrentDownloader.Report.add_line(formatter.info_line("leechs: #{torrent.leechs}"))
+    |> TorrentDownloader.Report.add_line(formatter.info_line("size: #{torrent.size}"))
+    |> TorrentDownloader.Report.add_line(formatter.info_line("url: #{torrent.link}"))
+    |> TorrentDownloader.Report.add_line(formatter.last_line)
     |> TorrentDownloader.Report.render
-  end
-
-  defp first_line do
-    "┌──────────────────────────────────────────────────────┐"
-  end
-
-  defp info_line(string) do
-    "│ " <> name_with_space_to(string, 52) <> " │"
-  end
-
-  defp horizontal_separator do
-    "├──────────────────────────────────────────────────────┤"
-  end
-
-  def last_line do
-    "└──────────────────────────────────────────────────────┘"
-  end
-
-  defp name_with_space_to(string, final_size) do
-    spacesc = final_size - String.length(string)
-    "#{string}" <> TorrentDownloader.CharGenerator.generate(" ", spacesc)
   end
 end

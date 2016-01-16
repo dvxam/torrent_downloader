@@ -9,7 +9,8 @@ defmodule TorrentDownloader.ReporterTest do
       size: "7.9Go",
       seeds: 2778,
       leechs: 3998}
-    assert TorrentDownloader.Reporter.report_torrent(torrent) == """
+    formatter = TorrentDownloader.TableFormatter
+    assert TorrentDownloader.Reporter.report_torrent(torrent, formatter) == """
     ┌──────────────────────────────────────────────────────┐
     │ Star Wars VI                                         │
     │ The best disney ever.                                │
